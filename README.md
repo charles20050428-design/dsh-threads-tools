@@ -1,7 +1,8 @@
 # dsh-threads-tools
 
 > Threads automation as agent tools for [DeepSeek Harness](https://github.com/deepseek-ai) (DSH).
-> Built on Playwright, driving a **real, already-logged-in browser session** instead of an API.
+> Browse the feed, pick posts to comment on, answer whoever replied, and publish — through a
+> **real, already-logged-in browser session** instead of an API.
 
 Threads has no public API for personal accounts, so most "automate Threads" attempts end up
 with a throwaway script. This project turns it into a reusable DSH plugin: seven tools an
@@ -14,12 +15,15 @@ agent can call directly, with state, quota and idempotency handled for you.
 
 ## Why this exists
 
-The goal was a fish that reads its own Threads notifications, replies to people, and posts —
-without me babysitting it. That needs three things a plain LLM cannot do:
+The goal was an agent that browses its own Threads feed, picks what it wants to reply to,
+answers whoever replied to it, and posts — without me babysitting it. That needs four things
+a plain LLM cannot do:
 
 1. **See the real page.** Notifications live behind a login.
 2. **Act on it.** Click, type, attach an image, publish — and know whether it worked.
 3. **Not be a spam bot.** Dedupe, rate-limit, one reply per person per day.
+4. **Remember.** Which accounts it already replied to, which notifications it already handled,
+   and how much it acted today — so a restart does not turn into a repeat offender.
 
 The plugin provides (2) and (3); DSH provides the agent loop and (1)'s session.
 
