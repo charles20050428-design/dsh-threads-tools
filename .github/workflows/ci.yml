@@ -32,3 +32,6 @@ jobs:
 
       - name: Tool registration smoke test
         run: node test/smoke.mjs
+
+      - name: Unit tests
+        run: node --test test/*.test.mjs

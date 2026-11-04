@@ -1,23 +1,28 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const DIR = path.join(process.env.USERPROFILE || process.env.HOME || '.', '.dsh', 'threads-browser');
-const STATE = path.join(DIR, 'state.json');
+/** 狀態目錄：預設 ~/.dsh/threads-browser，可用 THREADS_STATE_DIR 覆寫（測試或隔離環境用）。 */
+function stateDir() {
+  if (process.env.THREADS_STATE_DIR) return process.env.THREADS_STATE_DIR;
+  return path.join(process.env.USERPROFILE || process.env.HOME || '.', '.dsh', 'threads-browser');
+}
+
+const stateFile = () => path.join(stateDir(), 'state.json');
 
 const EMPTY = () => ({ replies: [], seen: {}, quota: { date: '', count: 0 } });
 
-export function statePath() { return STATE; }
+export function statePath() { return stateFile(); }
 
 export function loadState() {
   try {
-    const raw = JSON.parse(fs.readFileSync(STATE, 'utf8'));
+    const raw = JSON.parse(fs.readFileSync(stateFile(), 'utf8'));
     return { ...EMPTY(), ...raw, seen: { ...(raw.seen || {}) }, quota: { ...EMPTY().quota, ...(raw.quota || {}) } };
   } catch { return EMPTY(); }
 }
 
 export function saveState(state) {
-  fs.mkdirSync(DIR, { recursive: true });
-  fs.writeFileSync(STATE, JSON.stringify(state, null, 2));
+  fs.mkdirSync(stateDir(), { recursive: true });
+  fs.writeFileSync(stateFile(), JSON.stringify(state, null, 2));
 }
 
 export function today() {
@@ -48,10 +53,10 @@ export function markSeen(state, key, user) {
   state.seen[key] = { at: new Date().toISOString(), user: user || null };
   const keys = Object.keys(state.seen);
   if (keys.length > 1200) {
-    const at = (k) => { const v = state.seen[k]; return typeof v === 'string' ? v : (v?.at || ''); };
-    const keep = keys.sort((a, b) => at(a).localeCompare(at(b))).slice(-900);
+    // Object.keys 對非整數 key 會保留插入順序，砍掉開頭（最舊）即可。
+    // 原本用 timestamp 排序會在同一毫秒連續寫入時排不穩，砍錯筆。
     const next = {};
-    for (const k of keep) next[k] = state.seen[k];
+    for (const k of keys.slice(-900)) next[k] = state.seen[k];
     state.seen = next;
   }
 }

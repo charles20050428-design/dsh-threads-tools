@@ -39,7 +39,7 @@ const clean = (s) => (s || '').replace(/\s+/g, ' ').trim();
 export function stripPrefix(raw, user) {
   let t = clean(raw);
   if (user && t.startsWith(user)) t = t.slice(user.length).trim();
-  t = t.replace(/^(\d+\s*(秒|分鐘|小時|天|週|個月)|\d{1,2}\/\d{1,2}|\d+\s*(s|m|h|d))\s*(·\s*作者)?\s*/i, '');
+  t = t.replace(/^(剛剛|\d+\s*(秒|分鐘|小時|天|週|個月)|\d{1,2}\/\d{1,2}|\d+\s*(s|m|h|d))\s*(·\s*作者)?\s*/i, '');
   t = t.replace(/\s*翻譯\s*/g, ' ').replace(/\s*查看動態\s*/g, ' ').replace(/\s*熱門\s*/g, ' ');
   t = t.replace(/\s+\d+\s*\/\s*\d+\s+/g, ' ');
   t = t.replace(/\s+回覆[^……]{0,40}……/g, ' ');
