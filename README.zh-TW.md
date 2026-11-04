@@ -1,5 +1,7 @@
 # dsh-threads-tools
 
+![CI](https://github.com/charles20050428-design/dsh-threads-tools/actions/workflows/ci.yml/badge.svg) ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+
 > 把 Threads 自動化變成 [DeepSeek Harness](https://github.com/deepseek-ai)（DSH）的 agent 工具。
 > 滑推薦流、自己挑貼文留言、回覆來留言的人、發文——全部透過**真實、已登入的瀏覽器**，不是 API。
 
@@ -158,6 +160,21 @@ Threads 沒有給個人帳號用的公開 API，所以大部分「自動化 Thre
 **刻意的護欄。** 這些工具是給一個「人格」用的，不是給行銷漏斗用的，所以插件自己限制自己：
 一天 60 次回覆／留言、同一個帳號一天一次、`seen` 快取上限 1200 筆（同一則通知重讀不吃 token）。
 每個寫入動作都會事後驗證——工具會輪詢「已發佈」或輸入框被清空才回報成功，而不是假設點擊生效。
+
+---
+
+## 測試
+
+不需要瀏覽器，CI 上跑 Node 22 與 24。
+
+```bash
+npm ci
+node test/smoke.mjs         # 7 個工具註冊、schema 合法
+node --test test/*.test.mjs # 18 個單元測試：額度、去重、快取上限、前綴剝除
+```
+
+單元測試不會碰到你真正的狀態檔——`state.mjs` 支援 `THREADS_STATE_DIR`，
+測試會把它指到暫存目錄。
 
 ---
 

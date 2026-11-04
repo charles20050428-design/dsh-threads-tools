@@ -1,5 +1,7 @@
 # dsh-threads-tools
 
+![CI](https://github.com/charles20050428-design/dsh-threads-tools/actions/workflows/ci.yml/badge.svg) ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+
 > Threads automation as agent tools for [DeepSeek Harness](https://github.com/deepseek-ai) (DSH).
 > Browse the feed, pick posts to comment on, answer whoever replied, and publish — through a
 > **real, already-logged-in browser session** instead of an API.
@@ -173,6 +175,21 @@ funnel, so the plugin limits itself: 60 replies/comments per day, one reply per 
 day, and a bounded `seen` cache (1200 URLs) so re-reading the same notification costs nothing.
 Every write action is verified after the fact — the tool polls for "已發佈" or an emptied
 composer before reporting success, instead of assuming the click worked.
+
+---
+
+## Testing
+
+No browser required. CI runs these on Node 22 and 24.
+
+```bash
+npm ci
+node test/smoke.mjs         # 7 tools register, schemas valid
+node --test test/*.test.mjs # 18 unit tests: quota, dedupe, cache cap, prefix stripping
+```
+
+The unit tests never touch your real state file — `state.mjs` honours
+`THREADS_STATE_DIR`, and the tests point it at a temp directory.
 
 ---
 
