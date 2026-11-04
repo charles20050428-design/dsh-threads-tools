@@ -5,7 +5,7 @@
   "type": "module",
   "main": "./index.js",
   "license": "MIT",
-  "author": "YuCheng",
+  "author": "charles20050428-design",
   "keywords": [
     "dsh",
     "dsh-plugin",
