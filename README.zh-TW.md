@@ -23,6 +23,8 @@ Threads 沒有給個人帳號用的公開 API，所以大部分「自動化 Thre
 
 插件負責 (2) 和 (3)，(1) 的 session 由 DSH 提供。
 
+![架構圖：上面是工具契約，下面是 Playwright 控制器與狀態層](docs/architecture.svg)
+
 ---
 
 ## 工具
@@ -39,6 +41,21 @@ Threads 沒有給個人帳號用的公開 API，所以大部分「自動化 Thre
 
 需要圖片時 `imagePath` 吃絕對路徑。所有工具**不拋錯**，一律回 `{ tool, result }`；
 點擊失敗就回 `{ ok: false, error }`，讓 agent 能自己重試或改方法。
+
+```json
+// threads_notifications → only the unanswered ones by default
+{
+  "loggedIn": true,
+  "replies": [
+    { "user": "someone", "time": "2小時", "text": "…", "replyUrl": "/@someone/post/123", "replied": false }
+  ],
+  "counts": { "total": 12, "unanswered": 3 }
+}
+
+// threads_status
+{ "loggedIn": true, "me": "your_handle", "profile": "C:\\Users\\you\\.dsh\\threads-browser\\profile",
+  "quota": { "date": "2026-11-04", "used": 4, "left": 56 } }
+```
 
 ---
 

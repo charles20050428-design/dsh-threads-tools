@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="628" viewBox="0 0 840 628" role="img" aria-label="dsh-threads-tools architecture">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .t { font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #0f172a; }
+      .m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #0f172a; }
+      .s { fill: #475569; }
+      .box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+      .agent { fill: #eff6ff; stroke: #93c5fd; stroke-width: 1.5; }
+      .io { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; }
+      .lbl { font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #64748b; font-size: 12px; }
+      .line { stroke: #64748b; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="840" height="628" fill="#ffffff"/>
+
+  <text class="t" x="420" y="38" text-anchor="middle" font-size="20" font-weight="600">dsh-threads-tools — architecture</text>
+
+  <!-- agent -->
+  <rect class="agent" x="180" y="60" width="480" height="56" rx="10"/>
+  <text class="t" x="420" y="86" text-anchor="middle" font-size="15" font-weight="600">DeepSeek Harness agent</text>
+  <text class="lbl" x="420" y="105" text-anchor="middle">decides what to read, reply to, comment on or post</text>
+
+  <path class="line" d="M 420 116 L 420 152" marker-end="url(#arrow)"/>
+  <text class="lbl" x="432" y="140">threads_* tool calls (7)</text>
+
+  <!-- tool contract -->
+  <rect class="box" x="120" y="152" width="600" height="88" rx="10"/>
+  <text class="m" x="420" y="180" text-anchor="middle" font-size="15" font-weight="600">index.js — the tool contract</text>
+  <text class="lbl" x="420" y="203" text-anchor="middle">JSON Schema parameters · {tool, result} envelope · 180s timeout</text>
+  <text class="lbl" x="420" y="222" text-anchor="middle">failures come back as {ok:false, error} — never thrown at the model</text>
+
+  <path class="line" d="M 420 240 L 420 262 L 240 262 L 240 292" marker-end="url(#arrow)"/>
+  <path class="line" d="M 420 240 L 420 262 L 600 262 L 600 292" marker-end="url(#arrow)"/>
+
+  <!-- controller -->
+  <rect class="box" x="60" y="292" width="350" height="88" rx="10"/>
+  <text class="m" x="235" y="320" text-anchor="middle" font-size="15" font-weight="600">browser.mjs</text>
+  <text class="lbl" x="235" y="343" text-anchor="middle">Playwright controller</text>
+  <text class="lbl" x="235" y="362" text-anchor="middle">DOM anchors · reply-state heuristics · recent sort</text>
+
+  <!-- state -->
+  <rect class="box" x="430" y="292" width="350" height="88" rx="10"/>
+  <text class="m" x="605" y="320" text-anchor="middle" font-size="15" font-weight="600">state.mjs</text>
+  <text class="lbl" x="605" y="343" text-anchor="middle">quota · one reply per account per day</text>
+  <text class="lbl" x="605" y="362" text-anchor="middle">seen-cache (1200 → trim to 900) · reply log</text>
+
+  <path class="line" d="M 235 380 L 235 418" marker-end="url(#arrow)"/>
+  <path class="line" d="M 605 380 L 605 418" marker-end="url(#arrow)"/>
+
+  <rect class="io" x="60" y="418" width="350" height="66" rx="10"/>
+  <text class="m" x="235" y="444" text-anchor="middle" font-size="13">Edge profile (persistent)</text>
+  <text class="lbl" x="235" y="465" text-anchor="middle">login happens once, by hand</text>
+
+  <rect class="io" x="430" y="418" width="350" height="66" rx="10"/>
+  <text class="m" x="605" y="444" text-anchor="middle" font-size="13">~/.dsh/threads-browser/state.json</text>
+  <text class="lbl" x="605" y="465" text-anchor="middle">git-ignored · stays on your machine</text>
+
+  <path class="line" d="M 235 484 L 235 530" marker-end="url(#arrow)"/>
+
+  <rect class="agent" x="60" y="530" width="350" height="58" rx="10"/>
+  <text class="t" x="235" y="556" text-anchor="middle" font-size="15" font-weight="600">threads.com web UI</text>
+  <text class="lbl" x="235" y="576" text-anchor="middle">no public API — the UI is the interface</text>
+
+  <text class="lbl" x="812" y="612" text-anchor="end">no credentials are stored in this repo</text>
+</svg>

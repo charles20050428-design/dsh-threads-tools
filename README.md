@@ -27,6 +27,8 @@ a plain LLM cannot do:
 
 The plugin provides (2) and (3); DSH provides the agent loop and (1)'s session.
 
+![Architecture: tool contract on top, then the Playwright controller and the state layer](docs/architecture.svg)
+
 ---
 
 ## Tools
@@ -44,6 +46,21 @@ The plugin provides (2) and (3); DSH provides the agent loop and (1)'s session.
 All tools accept `imagePath` as an absolute path where relevant, and always resolve to
 `{ tool, result }` rather than throwing — a failed click returns `{ ok: false, error }`
 so the agent can retry or change its plan.
+
+```json
+// threads_notifications → only the unanswered ones by default
+{
+  "loggedIn": true,
+  "replies": [
+    { "user": "someone", "time": "2小時", "text": "…", "replyUrl": "/@someone/post/123", "replied": false }
+  ],
+  "counts": { "total": 12, "unanswered": 3 }
+}
+
+// threads_status
+{ "loggedIn": true, "me": "your_handle", "profile": "C:\\Users\\you\\.dsh\\threads-browser\\profile",
+  "quota": { "date": "2026-11-04", "used": 4, "left": 56 } }
+```
 
 ---
 
