@@ -1,0 +1,3 @@
+- insert:
+    - id: threads-browser
+      name: dsh-threads-browser-local

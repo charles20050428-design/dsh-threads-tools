@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# local runtime state (records which accounts you replied to + daily quota)
+state.json
+dsh/
+threads-browser/
+
+# browser profile — contains login cookies, NEVER commit
+profile/
+
+# secrets / local overrides
+.env
+*.local
+
+.gitCommitMsg.tmp
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
