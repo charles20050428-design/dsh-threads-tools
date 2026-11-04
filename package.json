@@ -23,6 +23,9 @@
       "patch": "./cordis.bundle.yml"
     }
   },
+  "devDependencies": {
+    "playwright-core": "^1.55.0"
+  },
   "peerDependencies": {
     "@deepseek-ai/dsh": ">=0.2.0-rc.2 <0.2.1-0 || >=0.2.1-rc.2 <0.3.0-0"
   },
